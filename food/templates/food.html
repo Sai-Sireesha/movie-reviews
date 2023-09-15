@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for food in foods %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ food.name }}</h5>
+                    <p class="card-text">{{ food.ingredients }}</p>
+                    <h6 class="card-title">{{ food.country }}</h6>
+                    <h6 class="card-title">{{ food.region }}</h6>                            
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ movie.image.url }}" class="img-fluid rounded-start" alt="">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ movie.title }}</h5>
+                <p class="card-text">{{ movie.description }}</p>
+                <a class="card-title fw-bold" href="{{ movie.trailer }}">Watch the trailer</a>
+                </br>
+                <a class="card-title fw-bold" href="{{ movie.teaser }}">Watch the teaser</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-text fw-bold">{{ movie.user_rating }}</h5>
+                <h5 class="card-text fw-bold">Available on {{ movie.ott }}</h5>
+            </div>
+            {%if user.is_authenticated %}
+            <a href="{% url 'createreview' movie.id %}" class="btn btn-primary">Add Review</a>
+            {% endif %}
+            <hr />
+            <h3>Reviews</h3>
+            <ul class="list-group">
+            {% for review in reviews %}
+                <li class="list-group-item pb-3 pt-3">
+                    <h5 class="card-title">
+                        Review by {{ review.user.username }}
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        {{ review.date }}
+                    </h6>
+                    <p class="card-text">{{ review.description }}</p>
+                    {% if user.is_authenticated and user == review.user %}
+                        <a class="btn btn-primary me-2" href="{% url 'editreview' review.id %}">Edit</a>
+                        <a class="btn btn-danger" href="{% url 'deletereview' review.id %}">Delete</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
